@@ -2,9 +2,10 @@ import React, { useState, useEffect } from 'react'
 import { useWeb3React } from '@web3-react/core'
 import { ethers } from 'ethers'
 import contractABI from '../../artifacts/contracts/Will.sol/WilliamNFT.json'
-const contractAddress = '0xdEEa09A458B57F4681024f345dA36E5A0E54b5f4'
+const contractAddress = '0x2e8CC4518e8B0Aaa8DeD84f3D784373Ea9ec3842'
 
 const Mint = () => {
+  const [contractPaused, setContractPaused] = useState(false)
   const [contractOwner, setContractOwner] = useState('')
   const [whitelistedUser, setWhitelistedUser] = useState(false)
   const [loading, setLoading] = useState(false)
@@ -43,7 +44,10 @@ const Mint = () => {
         contractABI.abi,
         library.getSigner(),
       )
-      const addedToWhitelist = await contract.whitelistUser(account)
+      //provide wallet address to add to whitelist
+      const addedToWhitelist = await contract.whitelistUser(
+        'WALLET_ADDRESS_HERE',
+      )
       // console.log(mintedNft)
       await addedToWhitelist.wait()
       console.log(addedToWhitelist)
@@ -116,6 +120,23 @@ const Mint = () => {
     }
   }
 
+  const handlePause = async () => {
+    setLoading(true)
+    try {
+      const contract = new ethers.Contract(
+        contractAddress,
+        contractABI.abi,
+        library.getSigner(),
+      )
+      const pause = await contract.pause(false)
+      await pause.wait()
+      console.log(ethers.utils.formatUnits(pause.value, 0))
+      setLoading(false)
+    } catch (error) {
+      console.log(`Minting Error: ${error.message}`)
+    }
+  }
+
   return (
     <div className="mint">
       {account ? (
@@ -140,9 +161,29 @@ const Mint = () => {
               </p>
             </div>
             {contractOwner == account && (
-              <div>
+              <div
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                }}
+              >
                 <button className="mint-button" onClick={handleReveal}>
                   {loading ? 'Revealing NFT Metadata...' : 'Reveal'}
+                </button>
+                <button
+                  style={{ marginTop: 20 }}
+                  className="mint-whitelist-button"
+                  onClick={handleWhitelist}
+                >
+                  {loading ? 'Processing...' : 'Get On The Whitelist'}
+                </button>
+                <button
+                  style={{ marginTop: 20 }}
+                  className="mint-whitelist-button"
+                  onClick={handlePause}
+                >
+                  {loading ? 'Processing...' : 'Pause Contract'}
                 </button>
               </div>
             )}

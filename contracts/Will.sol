@@ -13,7 +13,7 @@ contract WilliamNFT is ERC721Enumerable, Ownable {
   uint256 public cost = 0.05 ether;
   uint256 public maxSupply = 10;
   uint256 public maxMintAmount = 1;
-  bool public paused = false;
+  bool public paused = true;
   bool public revealed = false;
   string public notRevealedUri;
   mapping(address => bool) public whitelisted;
@@ -38,7 +38,7 @@ contract WilliamNFT is ERC721Enumerable, Ownable {
   // public
   function mint(address _to, uint256 _mintAmount) public payable {
     uint256 supply = totalSupply();
-    require(!paused);
+    require(!paused, 'Minting Currently Unavailable');
     require(_mintAmount > 0);
     require(_mintAmount <= maxMintAmount);
     require(supply + _mintAmount <= maxSupply);
