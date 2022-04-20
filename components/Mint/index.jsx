@@ -96,6 +96,7 @@ const Mint = () => {
             <div>
               <a
                 target="_blank"
+                rel="noreferrer"
                 href={`https://testnets.opensea.io/assets/${contractAddress}/${newMint}`}
               >
                 Go check out your new NFT!
