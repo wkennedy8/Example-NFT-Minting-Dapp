@@ -120,7 +120,7 @@ contract WilliamNFT is ERC721Enumerable, Ownable {
     paused = _state;
   }
  
- function whitelistUser(address _user) public onlyOwner {
+  function whitelistUser(address _user) public onlyOwner {
     whitelisted[_user] = true;
   }
  

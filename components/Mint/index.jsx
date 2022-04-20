@@ -2,10 +2,11 @@ import React, { useState, useEffect } from 'react'
 import { useWeb3React } from '@web3-react/core'
 import { ethers } from 'ethers'
 import contractABI from '../../artifacts/contracts/Will.sol/WilliamNFT.json'
-const contractAddress = '0x52227F21C1d6cc3d68B8e0d5DdB03829D6E5aDfa'
+const contractAddress = '0xdEEa09A458B57F4681024f345dA36E5A0E54b5f4'
 
 const Mint = () => {
   const [contractOwner, setContractOwner] = useState('')
+  const [whitelistedUser, setWhitelistedUser] = useState(false)
   const [loading, setLoading] = useState(false)
   const [contractSupply, setContractSupply] = useState('')
   const [contractMax, setContractMax] = useState('')
@@ -20,17 +21,35 @@ const Mint = () => {
         contractABI.abi,
         library.getSigner(),
       )
-      const mintedNft = await contract.mint(account, 1)
+      const mintedNft = await contract.mint(account, 1, { gasLimit: 1000000 })
       // console.log(mintedNft)
       await mintedNft.wait()
       console.log(mintedNft)
 
       contract.on('NewMint', (from, tokenId) => {
         setNewMint(tokenId.toNumber())
+        setLoading(false)
       })
-      setLoading(false)
     } catch (error) {
       console.log(`Minting Error: ${error.message}`)
+    }
+  }
+
+  const handleWhitelist = async () => {
+    setLoading(true)
+    try {
+      const contract = new ethers.Contract(
+        contractAddress,
+        contractABI.abi,
+        library.getSigner(),
+      )
+      const addedToWhitelist = await contract.whitelistUser(account)
+      // console.log(mintedNft)
+      await addedToWhitelist.wait()
+      console.log(addedToWhitelist)
+      setLoading(false)
+    } catch (error) {
+      console.log(`Whitelist Error: ${error.message}`)
     }
   }
 
@@ -59,6 +78,7 @@ const Mint = () => {
         contractABI.abi,
         library.getSigner(),
       )
+
       let owner = await contract.owner.call()
       setContractOwner(owner)
       let supply = await contract.totalSupply()
@@ -67,52 +87,67 @@ const Mint = () => {
       let max = await contract.maxSupply.call()
       max = ethers.utils.formatUnits(max, 0)
       setContractMax(max)
-      let revealed = await contract.revealed.call()
-      console.log(revealed)
+      let whitelist = await contract.whitelisted(account)
+      setWhitelistedUser(whitelist)
     } catch (error) {
       console.log(`Fetching Error: ${error.message}`)
     }
   }
 
   useEffect(() => {
-    if (account) {
+    if (account && active) {
       getContract()
     }
   }, [account, loading])
 
+  const renderActionableButton = () => {
+    if (!whitelistedUser) {
+      return (
+        <button className="mint-whitelist-button" onClick={handleWhitelist}>
+          {loading ? 'Processing...' : 'Get On The Whitelist'}
+        </button>
+      )
+    } else {
+      return (
+        <button className="mint-button" onClick={handleMint}>
+          {loading ? 'Processing...' : 'Mint NFT'}
+        </button>
+      )
+    }
+  }
+
   return (
     <div className="mint">
       {account ? (
-        <div>
-          <h1>Mint an NFT!</h1>
-          <button className="mint-button" onClick={handleMint}>
-            Mint
-          </button>
-          <p>
-            {contractSupply} / {contractMax} Minted!
-          </p>
-          {loading && <p>Minting....</p>}
-          {newMint && (
+        <>
+          <div>
+            <h1>Pre-Sale Minting Open!!</h1>
+            {renderActionableButton()}
+            {newMint && (
+              <div style={{ marginTop: 20 }}>
+                <a
+                  href={`https://testnets.opensea.io/assets/${contractAddress}/${newMint}`}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  View Minted NFT
+                </a>
+              </div>
+            )}
             <div>
-              <a
-                target="_blank"
-                rel="noreferrer"
-                href={`https://testnets.opensea.io/assets/${contractAddress}/${newMint}`}
-              >
-                Go check out your new NFT!
-              </a>
+              <p>
+                {contractSupply} / {contractMax} Minted
+              </p>
             </div>
-          )}
-          {contractOwner === account && (
-            <button
-              style={{ marginTop: 20 }}
-              className="mint-button"
-              onClick={handleReveal}
-            >
-              Reveal
-            </button>
-          )}
-        </div>
+            {contractOwner == account && (
+              <div>
+                <button className="mint-button" onClick={handleReveal}>
+                  {loading ? 'Revealing NFT Metadata...' : 'Reveal'}
+                </button>
+              </div>
+            )}
+          </div>
+        </>
       ) : (
         <p>Please connect wallet to mint.</p>
       )}

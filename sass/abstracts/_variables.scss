@@ -1,5 +1,19 @@
 // Breakpoints
 $desktop: 1280px;
+$mobile-breakpoint: 720px;
+$tablet-breakpoint: 1050px;
+
+@mixin mobile {
+  @media screen and (max-width: $mobile-breakpoint) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media screen and (max-width: $tablet-breakpoint) {
+    @content;
+  }
+}
 
 // Colors
 $black: #000;

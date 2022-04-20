@@ -1,7 +1,14 @@
 .hero {
-  height: 80vh;
+  // height: 80vh;
   color: $white;
   padding: 1rem;
+
+  @include tablet {
+    display: flex;
+    flex-direction: column;
+    // justify-content: center;
+    align-items: center;
+  }
 
   &-title {
     text-transform: uppercase;
@@ -20,6 +27,10 @@
   &-subtitle {
     text-transform: uppercase;
     font-size: 3rem;
+
+    @include tablet {
+      margin-top: -5px;
+    }
     span {
       background-color: $collection-yellow;
       color: black;
@@ -38,6 +49,10 @@
     display: flex;
     align-items: center;
     justify-content: center;
+
+    @include tablet {
+      text-align: center;
+    }
     p {
       text-transform: uppercase;
       font-size: 1.6rem;

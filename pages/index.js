@@ -9,7 +9,7 @@ export default function App() {
     <div>
       {/* Meta Data */}
       <Head>
-        <title>Oni Fightwear NFT</title>
+        <title>Will's NFT Collection</title>
         <meta name="description" content="Oni Fightwear NFT" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
