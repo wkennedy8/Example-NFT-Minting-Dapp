@@ -1,0 +1,51 @@
+.hero {
+  height: 80vh;
+  color: $white;
+  padding: 1rem;
+
+  &-title {
+    text-transform: uppercase;
+    font-size: 3rem;
+    span {
+      background-color: $purple;
+      color: black;
+      padding: 0.5rem;
+    }
+    span:first-child {
+      background-color: $oni-red;
+      color: black;
+    }
+  }
+
+  &-subtitle {
+    text-transform: uppercase;
+    font-size: 3rem;
+    span {
+      background-color: $collection-yellow;
+      color: black;
+      padding: 0.5rem;
+    }
+    span:first-child {
+      background-color: $founders-green;
+      color: black;
+    }
+    span:nth-child(2) {
+      background-color: $nft-green;
+    }
+  }
+
+  &-description {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    p {
+      text-transform: uppercase;
+      font-size: 1.6rem;
+      color: $primary-green;
+      padding: 0.5rem;
+      font-weight: 700;
+      // border: 1px solid red;
+      // width: 70%;
+    }
+  }
+}
