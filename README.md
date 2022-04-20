@@ -1,15 +1,10 @@
-# Basic Sample Hardhat Project
+# Basic NFT Minting Dapp
 
-This project demonstrates a basic Hardhat use case. It comes with a sample contract, a test for that contract, a sample script that deploys that contract, and an example of a task implementation, which simply lists the available accounts.
+This project demonstrates a basic NFT Minting use case. It comes with a reveal feature that only the owner of the deployed contract can change. We also keep track of whitelisted users who are allowed to mint if added to the array.
 
 Try running some of the following tasks:
 
 ```shell
-npx hardhat accounts
-npx hardhat compile
-npx hardhat clean
-npx hardhat test
-npx hardhat node
-node scripts/sample-script.js
-npx hardhat help
+yarn
+yarn run dev
 ```
