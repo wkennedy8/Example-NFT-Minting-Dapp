@@ -49,7 +49,9 @@ const Mint = () => {
         library.getSigner(),
       )
       //provide wallet address to add to whitelist
-      const addedToWhitelist = await contract.whitelistUser(account)
+      const addedToWhitelist = await contract.whitelistUser(
+        '0x40350b3d124621F9D66ef4b62B14681A973dD188',
+      )
       // console.log(mintedNft)
       await addedToWhitelist.wait()
       console.log(addedToWhitelist)
@@ -109,9 +111,9 @@ const Mint = () => {
   }, [account, loading])
 
   const renderActionableButton = () => {
-    if (!whitelistedUser) {
+    if (!whitelistedUser && !contractPaused) {
       return <h3>Unfortunately, you are not on a whitelisted user.</h3>
-    } else if (whitelistedUser && contractPaused == false) {
+    } else if (whitelistedUser && !contractPaused) {
       return (
         <button className="mint-button" onClick={handleMint}>
           {loading ? 'Processing...' : 'Mint NFT'}

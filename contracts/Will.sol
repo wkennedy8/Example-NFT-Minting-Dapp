@@ -39,9 +39,9 @@ contract WilliamNFT is ERC721Enumerable, Ownable {
   function mint(address _to, uint256 _mintAmount) public payable {
     uint256 supply = totalSupply();
     require(!paused, 'Minting Currently Unavailable');
-    require(_mintAmount > 0);
-    require(_mintAmount <= maxMintAmount);
-    require(supply + _mintAmount <= maxSupply);
+    require(_mintAmount > 0, 'Provide amount youd like to mint');
+    require(_mintAmount <= maxMintAmount, 'Too many tokens for this transaction');
+    require(supply + _mintAmount <= maxSupply, 'Sold out');
     require(msg.value >= cost, "Not enough ETH sent: check price.");
 
     if (msg.sender != owner()) {

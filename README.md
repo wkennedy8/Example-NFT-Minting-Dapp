@@ -8,3 +8,13 @@ Try running some of the following tasks:
 yarn
 yarn run dev
 ```
+
+## Deploying Contract after changes
+
+Please take a look at the `scripts/deploy.js` file to change \_NAME, \_SYMBOL, \_INITBASEURI, \_INITNOTREVELEADURI
+
+To deploy contract after changes run:
+
+```shell
+npx hardhat run scripts/deploy.js
+```
