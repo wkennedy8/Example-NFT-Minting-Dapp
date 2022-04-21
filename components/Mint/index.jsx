@@ -180,6 +180,7 @@ const Mint = () => {
                   alignItems: 'center',
                 }}
               >
+                <h1>Admin Controls</h1>
                 <button className="mint-button" onClick={handleReveal}>
                   {loading ? 'Revealing NFT Metadata...' : 'Reveal'}
                 </button>
