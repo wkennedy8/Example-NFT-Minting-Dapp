@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useWeb3React } from '@web3-react/core'
 import { ethers } from 'ethers'
 import contractABI from '../../artifacts/contracts/Will.sol/WilliamNFT.json'
-const contractAddress = '0xfb65407981E9fd269EBda0a736DeE60A194F1029'
+const contractAddress = '0x5EB3F2e15425504C9381cA7F2Eb1750c1C9c5935'
 
 const Mint = () => {
   const [contractPaused, setContractPaused] = useState(false)
@@ -114,7 +114,7 @@ const Mint = () => {
     if (!whitelistedUser) {
       return (
         <button className="mint-whitelist-button" onClick={handleWhitelist}>
-          {loading ? 'Processing...' : 'Get On The Whitelist'}
+          {loading ? 'Processing...' : 'Add User to Whitelist'}
         </button>
       )
     } else if (whitelistedUser && contractPaused == false) {

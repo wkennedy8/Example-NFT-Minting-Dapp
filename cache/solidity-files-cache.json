@@ -2,8 +2,8 @@
   "_format": "hh-sol-cache-2",
   "files": {
     "/Users/williamkennedy/Desktop/will-nft/contracts/Will.sol": {
-      "lastModificationDate": 1650498854894,
-      "contentHash": "b5b1b577a0bfdc49b2b0eebdf673773b",
+      "lastModificationDate": 1650498966749,
+      "contentHash": "194054b9298a67126700de8f6485742f",
       "sourceName": "contracts/Will.sol",
       "solcConfig": {
         "version": "0.8.4",
