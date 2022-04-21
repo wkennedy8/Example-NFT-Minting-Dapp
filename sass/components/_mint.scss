@@ -37,5 +37,9 @@
     font-weight: 800;
     font-size: 1.5rem;
     cursor: pointer;
+    &:hover {
+      background-color: gray;
+      color: $primary-green;
+    }
   }
 }

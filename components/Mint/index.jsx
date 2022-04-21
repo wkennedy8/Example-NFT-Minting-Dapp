@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react'
 import { useWeb3React } from '@web3-react/core'
 import { ethers } from 'ethers'
 import contractABI from '../../artifacts/contracts/Will.sol/WilliamNFT.json'
-const contractAddress = '0x5EB3F2e15425504C9381cA7F2Eb1750c1C9c5935'
+import AdminControls from '../AdminControls'
+const contractAddress = '0x6b55EEF6C7EfA894Ff7373527D26408400eB36C5'
 
 const Mint = () => {
   const [contractPaused, setContractPaused] = useState(false)
@@ -50,9 +51,8 @@ const Mint = () => {
       )
       //provide wallet address to add to whitelist
       const addedToWhitelist = await contract.whitelistUser(
-        '0x40350b3d124621F9D66ef4b62B14681A973dD188',
+        'WALLET ADDRESS HERE',
       )
-      // console.log(mintedNft)
       await addedToWhitelist.wait()
       console.log(addedToWhitelist)
       setLoading(false)
@@ -70,7 +70,6 @@ const Mint = () => {
         library.getSigner(),
       )
       const reveal = await contract.reveal()
-      // console.log(mintedNft)
       await reveal.wait()
       console.log(reveal)
       setLoading(false)
@@ -169,32 +168,11 @@ const Mint = () => {
               </p>
             </div>
             {contractOwner == account && (
-              <div
-                style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                }}
-              >
-                <h1>Admin Controls</h1>
-                <button className="mint-button" onClick={handleReveal}>
-                  {loading ? 'Revealing NFT Metadata...' : 'Reveal'}
-                </button>
-                <button
-                  style={{ marginTop: 20 }}
-                  className="mint-whitelist-button"
-                  onClick={handleWhitelist}
-                >
-                  {loading ? 'Processing...' : 'Add User to Whitelist'}
-                </button>
-                <button
-                  style={{ marginTop: 20 }}
-                  className="mint-whitelist-button"
-                  onClick={handlePause}
-                >
-                  {loading ? 'Processing...' : 'Pause Contract'}
-                </button>
-              </div>
+              <AdminControls
+                handleWhitelist={handleWhitelist}
+                handlePause={handlePause}
+                handleReveal={handleReveal}
+              />
             )}
           </div>
         </>

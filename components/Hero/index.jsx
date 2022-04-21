@@ -13,13 +13,7 @@ const Hero = () => {
         <span>Collection</span>
       </h1>
       <div className="hero-description">
-        <p>
-          test description test description test description test description
-          test description test description test description test description
-          test description test description test description test
-          descriptiontest descriptiontest description test descriptiontest
-          description test descriptiontest description test description
-        </p>
+        <p>WK NFTs is a practice NFT collection for learning purposes.</p>
       </div>
     </div>
   )
