@@ -42,6 +42,7 @@ contract WilliamNFT is ERC721Enumerable, Ownable {
     require(_mintAmount > 0);
     require(_mintAmount <= maxMintAmount);
     require(supply + _mintAmount <= maxSupply);
+    require(msg.value >= cost, "Not enough ETH sent: check price.");
 
     if (msg.sender != owner()) {
         if(whitelisted[msg.sender] != true) {

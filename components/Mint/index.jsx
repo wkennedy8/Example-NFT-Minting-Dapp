@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useWeb3React } from '@web3-react/core'
 import { ethers } from 'ethers'
 import contractABI from '../../artifacts/contracts/Will.sol/WilliamNFT.json'
-const contractAddress = '0x2e8CC4518e8B0Aaa8DeD84f3D784373Ea9ec3842'
+const contractAddress = '0xfb65407981E9fd269EBda0a736DeE60A194F1029'
 
 const Mint = () => {
   const [contractPaused, setContractPaused] = useState(false)
@@ -22,7 +22,10 @@ const Mint = () => {
         contractABI.abi,
         library.getSigner(),
       )
-      const mintedNft = await contract.mint(account, 1, { gasLimit: 1000000 })
+      const mintedNft = await contract.mint(account, 1, {
+        gasLimit: 1000000,
+        value: ethers.utils.parseEther('0.05'),
+      })
       // console.log(mintedNft)
       await mintedNft.wait()
       console.log(mintedNft)
@@ -33,6 +36,7 @@ const Mint = () => {
       })
     } catch (error) {
       console.log(`Minting Error: ${error.message}`)
+      setLoading(false)
     }
   }
 
@@ -45,9 +49,7 @@ const Mint = () => {
         library.getSigner(),
       )
       //provide wallet address to add to whitelist
-      const addedToWhitelist = await contract.whitelistUser(
-        'WALLET_ADDRESS_HERE',
-      )
+      const addedToWhitelist = await contract.whitelistUser(account)
       // console.log(mintedNft)
       await addedToWhitelist.wait()
       console.log(addedToWhitelist)
@@ -93,6 +95,8 @@ const Mint = () => {
       setContractMax(max)
       let whitelist = await contract.whitelisted(account)
       setWhitelistedUser(whitelist)
+      let paused = await contract.paused.call()
+      setContractPaused(paused)
     } catch (error) {
       console.log(`Fetching Error: ${error.message}`)
     }
@@ -128,7 +132,7 @@ const Mint = () => {
         contractABI.abi,
         library.getSigner(),
       )
-      const pause = await contract.pause(false)
+      const pause = await contract.pause(!contractPaused)
       await pause.wait()
       console.log(ethers.utils.formatUnits(pause.value, 0))
       setLoading(false)
@@ -142,7 +146,11 @@ const Mint = () => {
       {account ? (
         <>
           <div>
-            <h1>Pre-Sale Minting Open!!</h1>
+            <h1>
+              {contractPaused
+                ? 'Minting Currently Unavailable'
+                : 'Pre-Sale Minting Open!!'}
+            </h1>
             {renderActionableButton()}
             {newMint && (
               <div style={{ marginTop: 20 }}>
