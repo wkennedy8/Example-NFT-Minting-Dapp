@@ -3,7 +3,7 @@ import { useWeb3React } from '@web3-react/core'
 import { ethers } from 'ethers'
 import contractABI from '../../artifacts/contracts/Will.sol/WilliamNFT.json'
 import AdminControls from '../AdminControls'
-const contractAddress = '0x5FbDB2315678afecb367f032d93F642f64180aa3'
+const contractAddress = '0x83E878B1528488aB719a377b9700CFF1Fa8Fe17D'
 
 const Mint = () => {
   const [contractPaused, setContractPaused] = useState(false)
