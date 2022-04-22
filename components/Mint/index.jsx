@@ -3,7 +3,7 @@ import { useWeb3React } from '@web3-react/core'
 import { ethers } from 'ethers'
 import contractABI from '../../artifacts/contracts/Will.sol/WilliamNFT.json'
 import AdminControls from '../AdminControls'
-const contractAddress = '0x6b55EEF6C7EfA894Ff7373527D26408400eB36C5'
+const contractAddress = '0x5FbDB2315678afecb367f032d93F642f64180aa3'
 
 const Mint = () => {
   const [contractPaused, setContractPaused] = useState(false)
@@ -51,7 +51,7 @@ const Mint = () => {
       )
       //provide wallet address to add to whitelist
       const addedToWhitelist = await contract.whitelistUser(
-        'WALLET ADDRESS HERE',
+        'WALLET_ADDRESS_HERE',
       )
       await addedToWhitelist.wait()
       console.log(addedToWhitelist)
@@ -133,7 +133,6 @@ const Mint = () => {
       )
       const pause = await contract.pause(!contractPaused)
       await pause.wait()
-      console.log(ethers.utils.formatUnits(pause.value, 0))
       setLoading(false)
     } catch (error) {
       console.log(`Minting Error: ${error.message}`)

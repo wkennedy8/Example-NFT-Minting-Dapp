@@ -3,7 +3,7 @@ async function main() {
   const nftContract = await nftContractFactory.deploy(
     'Will',
     'WKC',
-    'ipfs://Qme39FcEcMsEf8RPwaFYHodJszWRakJYvbofdwDuViW8Qe/',
+    'ipfs://QmWLL4VmNsRTYig3hoRxxHyT8sefmBpyZjNrCyUoZ85QbS/',
     'ipfs://QmVc1mMrPpE58DHrqbWEL8En8mjkuF6Qx5Wpx8x1NBi8Mj/hidden.json',
   )
   await nftContract.deployed()
